@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "free-fast-mode": {
+      "command": "npx",
+      "args": ["-y", "free-fast-mode", "serve"]
+    }
+  }
+}

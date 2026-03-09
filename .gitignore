@@ -1,0 +1,5 @@
+node_modules
+dist
+.ffm-cache
+benchmarks/latest
+.DS_Store

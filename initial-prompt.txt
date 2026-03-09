@@ -1,0 +1,341 @@
+You are building a project called **free-fast-mode**.
+
+Goal
+----
+free-fast-mode is a local performance layer that makes coding agents like Claude Code and Codex run faster and cheaper.
+
+It must **not change the agent’s intent or planning**.
+
+Instead, it optimizes **how the agent’s chosen operations execute** through:
+
+- batching
+- caching
+- deduplication
+- speculation
+- narrowing
+- targeted execution
+
+Think of free-fast-mode as a **query optimizer + memoization layer for coding-agent tool calls**.
+
+Same task. Same agent. Same tools.
+Just faster and cheaper.
+
+Do NOT build a large orchestration runtime.
+Do NOT build a planner.
+Do NOT build a repo analysis product.
+
+Focus on **execution acceleration**.
+
+------------------------------------------------
+
+Core Principle
+--------------
+
+Agents repeatedly perform expensive operations:
+
+- reading files
+- searching text
+- discovering tests
+- resolving related files
+- summarizing context
+- running test targets
+
+free-fast-mode should expose optimized **typed operations** that perform these tasks efficiently.
+
+Each operation supports:
+
+- batching
+- deduplication
+- caching
+- speculative prefetch
+
+------------------------------------------------
+
+Project Architecture
+--------------------
+
+Implement a **single TypeScript project** with the following structure:
+
+free-fast-mode/
+  src/
+    operations/
+    optimizer/
+    cache/
+    mcp/
+    cli/
+    integrations/
+      claude/
+      codex/
+  examples/
+  benchmarks/
+  docs/
+  README.md
+  package.json
+
+Use **TypeScript + Node.js**.
+
+------------------------------------------------
+
+Core Concept: Operation
+-----------------------
+
+Define a typed abstraction called **Operation**.
+
+Example operations:
+
+- read_files
+- search_text
+- find_symbol
+- resolve_related_files
+- discover_tests
+- run_test_target
+- summarize_outputs
+
+Each operation should support metadata such as:
+
+- cache key
+- batchable flag
+- dedupe key
+- estimated cost
+- speculation hints
+- scope
+
+Execution flow:
+
+agent → operation → optimizer → execution → cache
+
+------------------------------------------------
+
+Optimizer Responsibilities
+--------------------------
+
+The optimizer performs four key actions:
+
+1) COALESCE
+Combine multiple small operations into larger batch operations.
+
+Example:
+read file A
+read file B
+read file C
+
+→ batch read
+
+2) REUSE
+Reuse cached results when possible.
+
+Example:
+search results
+file summaries
+workspace metadata
+
+3) SPECULATE
+Prefetch likely next artifacts safely.
+
+Example:
+after reading a test file → prefetch related module + config
+
+4) GATE
+Prevent obviously wasteful execution patterns.
+
+Example:
+broad scans when narrower scope is known
+
+------------------------------------------------
+
+Cache Layer
+-----------
+
+Implement a local cache with:
+
+- operation results
+- search results
+- file summaries
+- workspace snapshot
+- test discovery results
+
+Cache keys should consider:
+
+- repo path
+- branch if available
+- HEAD SHA if available
+- file fingerprints
+
+Support invalidation when:
+
+- files change
+- branch changes
+- lockfiles change
+- test configs change
+
+------------------------------------------------
+
+MCP Server
+----------
+
+Expose the system through an MCP server.
+
+Implement tools such as:
+
+ffm_read_files_batch
+ffm_search
+ffm_get_cached
+ffm_resolve_related_files
+ffm_discover_tests
+ffm_run_test_target
+ffm_summarize_outputs
+ffm_workspace_snapshot
+
+All tools should:
+
+- use the optimizer
+- reuse cache
+- support batching
+- return structured results
+
+------------------------------------------------
+
+CLI
+---
+
+Implement a CLI called `ffm`.
+
+Commands:
+
+ffm serve
+Start MCP server.
+
+ffm status
+Show cache + optimizer state.
+
+ffm snapshot
+Generate workspace snapshot.
+
+ffm bench
+Run benchmarks.
+
+ffm clear-cache
+
+------------------------------------------------
+
+Claude Integration
+------------------
+
+Provide integration assets only.
+
+Inside `integrations/claude` include:
+
+- example Claude hook configs
+- instructions for using free-fast-mode MCP
+- optional pre/post tool optimization hooks
+
+Hooks should mainly:
+
+- refresh cache
+- capture results
+- suggest optimized equivalents
+
+Do not replace Claude’s planner.
+
+------------------------------------------------
+
+Codex Integration
+-----------------
+
+Inside `integrations/codex` include:
+
+- Codex skill definitions
+- AGENTS.md examples
+- MCP config snippets
+
+Teach Codex to prefer optimized tools like:
+
+ffm_read_files_batch
+ffm_search
+ffm_resolve_related_files
+
+------------------------------------------------
+
+Benchmarks
+----------
+
+Create benchmarks demonstrating acceleration.
+
+Measure:
+
+- wall-clock execution time
+- tool calls
+- repeated reads avoided
+- search reuse
+- targeted vs full test execution
+
+Scenarios:
+
+1) debugging a failing test
+2) exploring unfamiliar repo
+3) locating symbol usage
+4) reading multiple related files
+
+Compare:
+
+baseline sequential operations
+vs
+free-fast-mode optimized operations
+
+Output results as:
+
+- markdown report
+- JSON metrics
+
+Do not fabricate performance improvements.
+
+------------------------------------------------
+
+Examples
+--------
+
+Provide demo repos:
+
+examples/demo-repo-js
+examples/demo-repo-py
+
+Show example agent workflows using the MCP tools.
+
+------------------------------------------------
+
+Documentation
+-------------
+
+Write a clear README with:
+
+What free-fast-mode is
+How it accelerates agents
+How to install
+How to run MCP server
+How to connect Claude Code
+How to connect Codex
+How to run benchmarks
+
+Avoid academic language.
+
+Position the project as:
+
+"free-fast-mode: a performance layer for coding agents"
+
+------------------------------------------------
+
+Implementation Order
+--------------------
+
+1) project skeleton
+2) operation abstraction
+3) optimizer
+4) cache layer
+5) MCP server
+6) CLI
+7) integrations
+8) examples
+9) benchmarks
+10) documentation
+
+Deliver a working MVP before adding complexity.

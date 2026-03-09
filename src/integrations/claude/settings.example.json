@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "free-fast-mode": {
+      "command": "npx",
+      "args": ["-y", "free-fast-mode", "serve"]
+    }
+  },
+  "hooks": {
+    "session_start": [
+      {
+        "type": "mcp_tool",
+        "server": "free-fast-mode",
+        "tool": "ffm_workspace_snapshot",
+        "arguments": { "forceRefresh": true }
+      }
+    ],
+    "post_tool_use": [
+      {
+        "type": "mcp_tool",
+        "server": "free-fast-mode",
+        "tool": "ffm_summarize_outputs",
+        "arguments": { "inputs": ["$TOOL_OUTPUT"], "maxChars": 400 }
+      }
+    ]
+  }
+}
