@@ -1,5 +1,10 @@
 # free-fast-mode
 
+[![Stars](https://img.shields.io/github/stars/tygent0/free-fast-mode?style=social)](https://github.com/tygent0/free-fast-mode/stargazers)
+[![Forks](https://img.shields.io/github/forks/tygent0/free-fast-mode?style=social)](https://github.com/tygent0/free-fast-mode/network/members)
+[![Issues](https://img.shields.io/github/issues/tygent0/free-fast-mode)](https://github.com/tygent0/free-fast-mode/issues)
+[![Publish Node.js Package](https://github.com/tygent0/free-fast-mode/actions/workflows/publish-npm.yml/badge.svg)](https://github.com/tygent0/free-fast-mode/actions/workflows/publish-npm.yml)
+
 free-fast-mode is a performance layer for coding agents.
 
 It does not replace agent planning. It accelerates execution of common agent operations with batching, caching, deduplication, speculation, and narrowing.
@@ -126,3 +131,7 @@ Metrics include wall-clock, tool calls, repeated reads avoided, cache/search reu
 - The MCP transport is lightweight and focused on local stdio usage.
 - Heuristics for related files are practical but intentionally simple.
 - `run_test_target` defaults to command selection and supports optional execution.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=tygent0/free-fast-mode&type=Date)](https://www.star-history.com/#tygent0/free-fast-mode&Date)
